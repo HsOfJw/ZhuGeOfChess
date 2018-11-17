@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "residueChess": 12,
+    "levelStageTip": "初出茅庐"
+  },
+  {
+    "id": 2,
+    "residueChess": 8,
+    "levelStageTip": "小试牛刀"
+  },
+  {
+    "id": 3,
+    "residueChess": 6,
+    "levelStageTip": "聚精会神"
+  },
+  {
+    "id": 4,
+    "residueChess": 5,
+    "levelStageTip": "大显身手"
+  },
+  {
+    "id": 5,
+    "residueChess": 4,
+    "levelStageTip": "惊才艳艳"
+  },
+  {
+    "id": 6,
+    "residueChess": 3,
+    "levelStageTip": "人中之龙"
+  },
+  {
+    "id": 7,
+    "residueChess": 2,
+    "levelStageTip": "旷世奇才"
+  },
+  {
+    "id": 8,
+    "residueChess": 1,
+    "levelStageTip": "独孤求败"
+  }
+]
