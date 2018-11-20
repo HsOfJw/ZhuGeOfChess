@@ -23,7 +23,7 @@ cc.Class({
         let self = this;
 
         //获取配置文件
-        if (window.wx != undefined) {
+        /*if (window.wx != undefined) {
 
             wx.showShareMenu();
             wx.request({
@@ -58,7 +58,7 @@ cc.Class({
                     ;
                 },
             })
-        }
+        }*/
 
         GameLocalStorage.initLocalStorage();
         JsonFileCfg.initJson();
