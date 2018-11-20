@@ -22,8 +22,30 @@ cc.Class({
     onLoad() {
         let self = this;
 
+        //开始加入qq玩一玩的代码
+        //启动对玩一玩的监听
+        if (typeof (GameStatusInfo) !== undefined) {
+            new BK.Game({
+                //QQ系统默认分享生命周期
+                onShare() {
+                    console.log("默认分享触发");
+                    let shareInfo = {
+                        qqImgUrl: 'http://hudong.qq.com/docs/engine/img/848B76B5530AA7EE7B38E9A1267D7086.png',
+                        msgUrl: 'http://hudong.qq.com',
+                        title: '轻游戏',
+                        summary: '一起来玩游戏吧~',
+
+                    };
+                    return shareInfo;
+                },
+                onClose() {
+                    console.log("触发关闭");
+                }
+            })
+        }
+
         //获取配置文件
-        /*if (window.wx != undefined) {
+        if (window.wx != undefined) {
 
             wx.showShareMenu();
             wx.request({
@@ -58,7 +80,7 @@ cc.Class({
                     ;
                 },
             })
-        }*/
+        }
 
         GameLocalStorage.initLocalStorage();
         JsonFileCfg.initJson();
