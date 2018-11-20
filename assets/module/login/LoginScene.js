@@ -135,6 +135,7 @@ cc.Class({
         //image.onload = () => {
         image.onload = function () {
             try {
+                console.log("11111");
                 let texture = new cc.Texture2D();
                 texture.initWithElement(image);
                 texture.handleLoadedTexture();
