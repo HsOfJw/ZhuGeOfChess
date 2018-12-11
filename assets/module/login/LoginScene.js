@@ -24,7 +24,7 @@ cc.Class({
 
         //开始加入qq玩一玩的代码
         //启动对玩一玩的监听
-        if (typeof (GameStatusInfo) !== undefined) {
+        if (cc.sys.platform === cc.sys.QQ_PLAY) {
             new BK.Game({
                 //QQ系统默认分享生命周期
                 onShare() {
@@ -42,36 +42,10 @@ cc.Class({
                     console.log("触发关闭");
                 }
             })
-            let sendData = {
-                open_id: GameStatusInfo.openId,
-                gender: GameStatusInfo.sex,
-                game_id: GameStatusInfo.gameId,
-            };
-            //发送登录请求
-            console.log("------->开始发送登录请求");
-            BK.Http.request({
-                url: 'https://s.51weiwan.com/api/login/index',
-                method: 'POST',
-
-                body: JSON.stringify(sendData),
-                success: function (succObj) {
-                    console.log('statusCode', succObj.statusCode);
-                    console.log('headers', JSON.stringify(succObj.headers));
-                    const bodyStr = succObj.text();
-                    console.log('body', bodyStr);
-                },
-                fail: function (errObj) {
-                    console.log('error', errObj.msg);
-                }
-                ,
-                complete: function () {
-                    console.log('complete');
-                },
-            });
         }
 
         //获取配置文件
-        /*if (window.wx != undefined) {
+        if (window.wx != undefined) {
 
             wx.showShareMenu();
             wx.request({
@@ -106,23 +80,23 @@ cc.Class({
                     ;
                 },
             })
-        }*/
+        }
 
         GameLocalStorage.initLocalStorage();
         JsonFileCfg.initJson();
         this.addNode.removeAllChildren();
 
-        /* let isGreenHand = GameLocalStorage.getUid();
-         if (!isGreenHand) {//新手
-             this.enterGameBtn.active = false;
-             UIMgr.createPrefab(this.foreWord, function (root, ui) {
-                 this.addNode.addChild(root);
-             }.bind(this));
-             console.log("[LoginScene]  onLoad 判定内存中不存在uid 开始执行微信登录 获取设备信息");
+        let isGreenHand = GameLocalStorage.getUid();
+        if (!isGreenHand) {//新手
+            this.enterGameBtn.active = false;
+            UIMgr.createPrefab(this.foreWord, function (root, ui) {
+                this.addNode.addChild(root);
+            }.bind(this));
+            console.log("[LoginScene]  onLoad 判定内存中不存在uid 开始执行微信登录 获取设备信息");
 
-         } else {
-             this.enterGameBtn.active = true;
-         }*/
+        } else {
+            this.enterGameBtn.active = true;
+        }
         this.soundToggle.isChecked = GameData.playerGameState.soundOn;
         this.shadeToggle.isChecked = GameData.playerGameState.shakeOn;
         this.onBtnClickSound();
@@ -150,6 +124,12 @@ cc.Class({
             GameData.watchVideoInfo.watchVideoCount = 0;
             cc.sys.localStorage.setItem("watchVideoInfo_zhuGeOfChess", GameData.watchVideoInfo);
         }*/
+        //阿拉丁游戏 事件埋点
+        if (window.wx) {
+
+            wx.aldSendEvent('login', {'login_id': new Date()});
+            console.log("阿拉丁埋点成功");
+        }
 
     },
     start() {
@@ -203,6 +183,10 @@ cc.Class({
 
 
     onBtnClickCannot() {
+        //阿拉丁游戏 事件埋点
+        if (window.wx) {
+            wx.aldSendEvent('exit', {'exit': new Date()});
+        }
     },
     onBtnClickEnterGame() {
         GameData.enterMainWay = "loginToMain";

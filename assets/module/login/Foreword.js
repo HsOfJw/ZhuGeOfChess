@@ -70,7 +70,11 @@ cc.Class({
                     });
                     console.log("button 按钮信息", button);
                     button.onTap((res) => {
+                        if (window.wx) {
+                            wx.aldSendEvent('authorization', {'authorization': new Date()});
+                        }
                         if (res.errMsg == "getUserInfo:ok") {
+                            wx.aldSendEvent('authorizationSuccess', {'authorizationSuccess': new Date()});
                             //数据交互
                             console.log("点击按钮获取到的用户信息", res);
                             wx.request({
@@ -83,6 +87,7 @@ cc.Class({
                                 },
                                 success: function (res) {
                                     if (res.data.errno == 0) {//返回结果正确
+                                        wx.aldSendEvent('authorizationSuccess', {'authorizationSuccess': new Date()});
                                         button.destroy();
                                         self.loginSuccess(res.data.data);
                                     } else {
@@ -92,6 +97,8 @@ cc.Class({
                                     console.log("服务器相应数据", res);
                                 },
                             })
+                        }else{
+                            wx.aldSendEvent('rejectAuthorizationSuccess', {'rejectAuthorizationSuccess': new Date()});
                         }
                         console.log("点击button 按钮的返回值", res);
                     })

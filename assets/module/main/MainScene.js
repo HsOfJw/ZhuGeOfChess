@@ -82,9 +82,14 @@ cc.Class({
         if (!isGreenHand) {
             this.guideNode_1.active = true;
         }
+        if (window.wx) {
+            wx.aldSendEvent('mainScene_load', {'mainScene_load_id': new Date()});
+            console.log("阿拉丁埋点成功");
+        }
     },
     //初始化每个士兵的位置信息
     _initArmData() {
+
         for (let k = 1; k < 48; k++) {
             let lineNumber = Math.ceil(k / 7);
             let remainder = k % 7;
@@ -154,12 +159,20 @@ cc.Class({
 
 
     onBtnClickSeekHelp() {
+        if (window.wx) {
+            wx.aldSendEvent('mainScene_SeekHelp', {'mainScene_SeekHelp_id': new Date()});
+            console.log("阿拉丁埋点成功");
+        }
         this.addNode.removeAllChildren();
         UIMgr.createPrefab(this.seekHelp, function (root, ui) {
             this.addNode.addChild(root);
         }.bind(this));
     },
     onBtnClickPlayMethodDemo() {
+        if (window.wx) {
+            wx.aldSendEvent('mainScene_Demo', {'mainScene_Demo_id': new Date()});
+            console.log("阿拉丁埋点成功");
+        }
         this.addNode.removeAllChildren();
         UIMgr.createPrefab(this.playMethodDemo, function (root, ui) {
             this.addNode.addChild(root);
